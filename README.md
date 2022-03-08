@@ -1,14 +1,32 @@
-# Project
+# VSTest GitHub Action
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This action was created to run tests using VSTest framework and to easily migrate a pipeline using [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops). Most of the commonly used properties in the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops) map to properties of this GitHub action. Like the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops), this action only supports `Windows` but NOT `Linux`.
 
-As the maintainer of this project, please make a few updates:
+Due to the unavailability of a Test results UI, test results are displayed in the console logs of the action.
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+## Usage
+
+See [action.yml](action.yml)
+
+## Example
+
+```
+jobs:
+  my_action_job:
+    runs-on: windows-latest
+    name: A job to run VSTest
+    steps:
+      - name: Download tests binary zip
+        run: powershell Invoke-WebRequest -Uri "https://localworker.blob.core.windows.net/win-x64/tests.zip" -OutFile "./tests.zip"
+      - name: Unzip tests binary
+        run: powershell Expand-Archive -Path tests.zip -DestinationPath ./
+      - name: Run tests
+        uses: microsoft-approved-actions/vstest@master
+        with:
+          testAssembly: CloudTest.DefaultSamples*.dll
+          searchFolder: ./tests/
+          runInParallel: true
+```
 
 ## Contributing
 
