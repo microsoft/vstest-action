@@ -153,7 +153,7 @@ function getVsTestPath(): string {
   return path.join(__dirname, 'win-x64/VsTest/v160/Common7/IDE/Extensions/TestPlatform/vstest.console.exe')
 }
 
-async function run() {
+export async function run() {
   try {
     let testFiles = await getTestAssemblies();
     if(testFiles.length == 0) {
@@ -165,7 +165,7 @@ async function run() {
       core.debug(`${file}`)
     });
 
-    core.info(`Donwloading test tools...`);
+    core.info(`Downloading test tools...`);
     let workerZipPath = path.join(__dirname, 'win-x64.zip')
     await exec.exec(`powershell Invoke-WebRequest -Uri "https://aka.ms/local-worker-win-x64" -OutFile ${workerZipPath}`);
 
