@@ -1,4 +1,3 @@
-
 import {findFilesToUpload} from '../src/search';
 import {getInputs} from '../src/input-helper';
 import {NoFileOptions} from '../src/constants';
@@ -10,7 +9,7 @@ test('test getInputs', async () => {
 })
 
 test('test findFilesToUpload', async () => {
-    var searchFolder = process.env['RUNNER_SEARCH'];
+    var searchFolder = process.env['RUNNER_SEARCH'] as string
 
     let result = findFilesToUpload(searchFolder)
     expect((await result).filesToUpload).toBeGreaterThan(0)

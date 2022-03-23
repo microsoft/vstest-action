@@ -3,7 +3,6 @@ const fs = require('fs')
 const io = require('@actions/io')
 const data = require('./jest.setup.json')
 
-
 jest.setTimeout(60000) // in milliseconds
 
 // Set temp and tool directories before importing (used to set global state)

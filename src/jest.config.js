@@ -5,7 +5,7 @@ module.exports = {
     testMatch: ['**/*.test.ts'],
     testRunner: 'jest-circus/runner',
     transform: {
-      '^.+\\.ts?$': 'ts-jest'
+      '^.+\\.ts$': 'ts-jest'
     },
     verbose: true,
     setupFilesAfterEnv: ['./jest.setup.js']
