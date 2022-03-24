@@ -9,8 +9,8 @@ export function getInputs(): UploadInputs {
   const name = core.getInput(Inputs.Name)
   const path = 'TestResults'
 
-  const ifNoFilesFound = core.getInput(Inputs.IfNoFilesFound)
-  const noFileBehavior: NoFileOptions = NoFileOptions[ifNoFilesFound]
+  const ifNoFilesFound: string = core.getInput(Inputs.IfNoFilesFound)
+  const noFileBehavior: NoFileOptions = NoFileOptions[ifNoFilesFound as keyof typeof NoFileOptions]
 
   if (!noFileBehavior) {
     core.setFailed(

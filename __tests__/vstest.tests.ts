@@ -3,9 +3,9 @@ import {getInputs} from '../src/input-helper';
 import {NoFileOptions} from '../src/constants';
 import { run } from '../src/index'
 
-test('test getInputs', async () => {
+test('test getInputs with no input', async () => {
     let inputs = getInputs()
-    expect(inputs.artifactName).toBeGreaterThan(0)
+    expect(inputs.ifNoFilesFound)
 })
 
 test('test findFilesToUpload', async () => {
