@@ -1,22 +1,10 @@
 {
   "envVars": [
-    {
-        "name": "Value1",
-        "value": 1
-    },
-    {
-        "name": "Value2",
-        "value": 2
-    }
+    { "name": "RUNNER_WORKSPACE", "value": "./vstest-action/src" },
+    { "name": "GITHUB_REPOSITORY", "value": "publish-symbols" }
   ],
   "inputs": [
-    {
-        "name": "Value3",
-        "value": 3
-    },
-    {
-        "name": "Value4",
-        "value": 4
-    }
+    { "name": "testAssembly", "value": "vstest-functional-test.dll" },
+    { "name": "searchFolder", "value": "./src/vstest-functional-test/bin/Debug/net6.0/" }
   ]
 }
