@@ -1,0 +1,10 @@
+{
+  "envVars": [
+    { "name": "RUNNER_WORKSPACE", "value": "" },
+    { "name": "GITHUB_REPOSITORY", "value": "" }
+  ],
+  "inputs": [
+    { "name": "testAssembly", "value": "" },
+    { "name": "searchFolder", "value": "" }
+  ]
+}
