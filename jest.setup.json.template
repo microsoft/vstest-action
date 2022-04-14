@@ -1,10 +1,10 @@
 {
   "envVars": [
-    { "name": "RUNNER_WORKSPACE", "value": "" },
-    { "name": "GITHUB_REPOSITORY", "value": "" }
+    { "name": "RUNNER_WORKSPACE", "value": "__WORKSPACE__" },
+    { "name": "GITHUB_REPOSITORY", "value": "__REPO__" }
   ],
   "inputs": [
-    { "name": "testAssembly", "value": "" },
-    { "name": "searchFolder", "value": "" }
+    { "name": "testAssembly", "value": "__TESTASSEMBLY__" },
+    { "name": "searchFolder", "value": "__SEARCHFOLDER__" }
   ]
 }
