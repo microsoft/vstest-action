@@ -8,7 +8,7 @@ jest.setTimeout(60000) // in milliseconds
 // Set temp and tool directories before importing (used to set global state)
 const cachePath = path.join(__dirname, '__tests__', 'CACHE')
 const tempPath = path.join(__dirname, '__tests__', 'TEMP')
-const searchPath = path.join(__dirname,'__tests__', 'SOURCE' )
+const searchPath = path.join(__dirname,'__tests__', 'SEARCH' )
 
 // Define all the environment variables
 process.env['RUNNER_SEARCH'] = searchPath
