@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "ncc build src\\index.ts"
+    "build": "ncc build src\\index.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@actions/artifact": "^0.5.2",
