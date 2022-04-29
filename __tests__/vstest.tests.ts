@@ -11,6 +11,7 @@ import {getTestAssemblies} from '../src/getTestAssemblies'
 import {getArguments} from '../src/getArguments'
 import {getVsTestPath} from '../src/getVsTestPath'
 
+
 describe('vstest Action Unit Tests', ()=>{
 
     beforeEach(async() => {
@@ -33,7 +34,8 @@ describe('vstest Action Unit Tests', ()=>{
         
     });
 
-    it("test getArguments with all expected inputs", async () => {
+
+    it("test getArguments with no inputs", async () => {
 
         jest.mock('@actions/core');
         jest.spyOn(core,'debug');
@@ -42,21 +44,49 @@ describe('vstest Action Unit Tests', ()=>{
 
         // Arrange
         const coreMock = jest.spyOn(core, 'getInput');
-        
-        coreMock.mockImplementation((arg: string) => 'testFiltercriteria').mockReturnValue('testFilterCriteria');
-        coreMock.mockImplementation((arg: string) => 'runSettingsFile').mockReturnValue('runSettingsFile');
-        coreMock.mockImplementation((arg: string) => 'pathtoCustomTestAdapters').mockReturnValue('pathtoCustomTestAdapters');
-        coreMock.mockImplementation((arg: string) => 'runInParallel').mockReturnValue('true');
-        coreMock.mockImplementation((arg: string) => 'runTestsInIsolation').mockReturnValue('true');
-        coreMock.mockImplementation((arg: string) => 'codeCoverageEnabled').mockReturnValue('true');
-        coreMock.mockImplementation((arg: string) => 'platform').mockReturnValue('x64');
-        coreMock.mockImplementation((arg: string) => 'otherConsoleOptions').mockReturnValue('otherConsoleOptions');
+        coreMock.mockImplementation((arg: string) => 'testFiltercriteria').mockReturnValueOnce('');
+        coreMock.mockImplementation((arg: string) => 'runSettingsFile').mockReturnValueOnce('');
+        coreMock.mockImplementation((arg: string) => 'pathtoCustomTestAdapters').mockReturnValueOnce('');
+        coreMock.mockImplementation((arg: string) => 'runInParallel').mockReturnValueOnce('false');
+        coreMock.mockImplementation((arg: string) => 'runTestsInIsolation').mockReturnValueOnce('false');
+        coreMock.mockImplementation((arg: string) => 'codeCoverageEnabled').mockReturnValueOnce('false');
+        coreMock.mockImplementation((arg: string) => 'platform').mockReturnValueOnce('');
+        coreMock.mockImplementation((arg: string) => 'otherConsoleOptions').mockReturnValueOnce('');
     
         // Act
         var args = getArguments();
     
         // Assert
         expect(args).not.toBeNull();
+        expect(args).toBe('');
+    
+    });
+
+    it("test getArguments with all expected inputs", async () => {
+
+        const expectedResult = '/TestCaseFilter:testFilterCriteria /Settings:runSettingsFile /TestAdapterPath:pathtoCustomTestAdapters /Parallel /InIsolation /Enablecodecoverage /Platform:x64 otherConsoleOptions '
+        jest.mock('@actions/core');
+        jest.spyOn(core,'debug');
+        jest.spyOn(core, 'info');
+        jest.spyOn(core, 'getInput');
+
+        // Arrange
+        const coreMock = jest.spyOn(core, 'getInput');
+        coreMock.mockImplementation((arg: string) => 'testFiltercriteria').mockReturnValueOnce('testFilterCriteria');
+        coreMock.mockImplementation((arg: string) => 'runSettingsFile').mockReturnValueOnce('runSettingsFile');
+        coreMock.mockImplementation((arg: string) => 'pathtoCustomTestAdapters').mockReturnValueOnce('pathtoCustomTestAdapters');
+        coreMock.mockImplementation((arg: string) => 'runInParallel').mockReturnValueOnce('true');
+        coreMock.mockImplementation((arg: string) => 'runTestsInIsolation').mockReturnValueOnce('true');
+        coreMock.mockImplementation((arg: string) => 'codeCoverageEnabled').mockReturnValueOnce('true');
+        coreMock.mockImplementation((arg: string) => 'platform').mockReturnValueOnce('x64');
+        coreMock.mockImplementation((arg: string) => 'otherConsoleOptions').mockReturnValueOnce('otherConsoleOptions');
+    
+        // Act
+        var args = getArguments();
+    
+        // Assert
+        expect(args).not.toBeNull();
+        expect(args).toEqual(expectedResult);
     
     });
 });
