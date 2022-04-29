@@ -11,5 +11,7 @@ module.exports = {
       '^.+\\.ts$': 'ts-jest'
     },
     verbose: true,
+    collectCoverage: true,
+    coverageReporters: ["json", "html"],
     setupFilesAfterEnv: ['./jest.setup.js']
   }

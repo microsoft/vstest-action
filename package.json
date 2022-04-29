@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "ncc build src\\index.ts",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@actions/artifact": "^0.5.2",
