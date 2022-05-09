@@ -18,9 +18,9 @@ export function getArguments(): string {
     args += `/Settings:${runSettingsFile} `
   }
 
-  let pathtoCustomTestAdapters = core.getInput('pathtoCustomTestAdapters')
-  if(pathtoCustomTestAdapters) {
-    args += `/TestAdapterPath:${pathtoCustomTestAdapters} `
+  let pathToCustomTestAdapters = core.getInput('pathToCustomTestAdapters')
+  if(pathToCustomTestAdapters) {
+    args += `/TestAdapterPath:${pathToCustomTestAdapters} `
   }
 
   let runInParallel = core.getInput('runInParallel')
@@ -35,7 +35,7 @@ export function getArguments(): string {
 
   let codeCoverageEnabled = core.getInput('codeCoverageEnabled')
   if(codeCoverageEnabled && codeCoverageEnabled.toUpperCase() === "TRUE") {
-    args += `/Enablecodecoverage `
+    args += `/EnableCodeCoverage `
   }
 
   let platform = core.getInput('platform')
