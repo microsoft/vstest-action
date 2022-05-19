@@ -15,7 +15,7 @@ inputs:
     required: false
 
   vstestLocationMethod:
-    description: 'Specify which test platform should be used. Valid values are: `verion` and `location`)'
+    description: 'Specify which test platform should be used. Valid values are: `version` and `location`)'
     required: false
 
   vsTestVersion:
