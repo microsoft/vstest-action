@@ -8,6 +8,7 @@ export async function uploadArtifact() {
   try {
     const inputs = getInputs()
     const searchResult = await findFilesToUpload(inputs.searchPath)
+
     if (searchResult.filesToUpload.length === 0) {
       // No files were found, different use cases warrant different types of behavior if nothing is found
       switch (inputs.ifNoFilesFound) {
