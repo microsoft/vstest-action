@@ -34,9 +34,4 @@ jobs:
           npm install
       - run: |
           npm run build
-      - run: |
-          zip vstest-action.zip action.yml dist/*
-      - uses: actions/upload-artifact@v2
-        with:
-          name: vstest-action
-          path: vstest-action.zip
+          
