@@ -28,21 +28,28 @@ jobs:
        
       - name: Build GitHub Action
         run: npm run build
+                        
+      - name: Run Unit Tests
+        run: npm run test
           
-      # include any workflow/action specific dependencies
+      # include any workflow/action specific dependencies to execute Functional Tests
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.102
+          
       - name: Install dependencies
         working-directory: './Utilities/functional-tests/'
         run: dotnet restore
+        
       - name: Build
         working-directory: './Utilities/functional-tests/'
         run: dotnet build --configuration Debug --no-restore
+        
       - name: Test
         working-directory: './Utilities/functional-tests/'
-        run: dotnet test 
+        run: dotnet test
+        
       - name: 'VSTest Action using functional tests'
         uses: ./                  #picks the current action PR code.
         with:
