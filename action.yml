@@ -1,17 +1,17 @@
-name: 'vstest-action'
-description: 'Run VSTest and upload result logs'
+name: "vstest-action"
+description: "Run VSTest and upload result logs"
 inputs:
   testAssembly:
-    description: 'Run tests from the specified files'
+    description: "Run tests from the specified files"
     required: true
     default: '**\\*test*.dll\n!**\\*TestAdapter.dll\n!**\\obj\\**'
 
   searchFolder:
-    description: 'Folder to search for the test assemblies'
+    description: "Folder to search for the test assemblies"
     required: true
 
   testFiltercriteria:
-    description: 'Additional criteria to filter tests from Test assemblies'
+    description: "Additional criteria to filter tests from Test assemblies"
     required: false
 
   vstestLocationMethod:
@@ -19,45 +19,45 @@ inputs:
     required: false
 
   vsTestVersion:
-    description: 'The version of Visual Studio test to use. If latest is specified it chooses Visual Studio 2017 or Visual Studio 2015 depending on what is installed. Visual Studio 2013 is not supported. Valid values are: `latest`, `14.0`, `15.0`, and `16.0`'
+    description: "The version of Visual Studio test to use. If latest is specified it chooses Visual Studio 2017 or Visual Studio 2015 depending on what is installed. Visual Studio 2013 is not supported. Valid values are: `latest`, `14.0`, `15.0`, and `16.0`"
     required: false
 
   vstestLocation:
-    description: 'Specify the path to VSTest'
+    description: "Specify the path to VSTest"
     required: false
 
   runSettingsFile:
-    description: 'Path to runsettings or testsettings file to use with the tests'
+    description: "Path to runsettings or testsettings file to use with the tests"
     required: false
 
-  pathtoCustomTestAdapters:
-    description: 'Directory path to custom test adapters. Adapters residing in the same folder as the test assemblies are automatically discovered'
+  pathToCustomTestAdapters:
+    description: "Directory path to custom test adapters. Adapters residing in the same folder as the test assemblies are automatically discovered"
     required: false
 
   runInParallel:
-    description: 'If set, tests will run in parallel leveraging available cores of the machine. This will override the MaxCpuCount if specified in your runsettings file. Valid values are: `true` and `false`'
+    description: "If set, tests will run in parallel leveraging available cores of the machine. This will override the MaxCpuCount if specified in your runsettings file. Valid values are: `true` and `false`"
     required: false
 
   runTestsInIsolation:
-    description: 'Runs the tests in an isolated process. This makes vstest.console.exe process less likely to be stopped on an error in the tests, but tests might run slower. Valid values are: `true` and `false`'
+    description: "Runs the tests in an isolated process. This makes vstest.console.exe process less likely to be stopped on an error in the tests, but tests might run slower. Valid values are: `true` and `false`"
     required: false
 
   codeCoverageEnabled:
-    description: 'Collect code coverage information from the test run'
+    description: "Collect code coverage information from the test run"
     required: false
 
   otherConsoleOptions:
-    description: 'Other console options that can be passed to vstest.console.exe'
+    description: "Other console options that can be passed to vstest.console.exe"
     required: false
 
   platform:
-    description: 'Build platform against which the tests should be reported. Valid values are: `x86`, `x64`, and `ARM`'
+    description: "Build platform against which the tests should be reported. Valid values are: `x86`, `x64`, and `ARM`"
     required: false
 
   resultLogsArtifactName:
-    description: 'Test result logs artifact name'
+    description: "Test result logs artifact name"
     required: true
-    default: 'vs-test-result-logs'
+    default: "vs-test-result-logs"
 
   ifNoFilesFound:
     description: >
@@ -66,7 +66,7 @@ inputs:
         warn: Output a warning but do not fail the action
         error: Fail the action with an error message
         ignore: Do not output any warnings or errors, the action does not fail
-    default: 'warn'
+    default: "warn"
 
   retentionDays:
     description: >
@@ -75,5 +75,5 @@ inputs:
       Maximum 90 days unless changed from the repository settings page.
 
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"

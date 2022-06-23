@@ -29,9 +29,9 @@ function getDefaultGlobOptions(): glob.GlobOptions {
  * Example 2: The patterns `~/foo/bar/*` and `~/foo/voo/two/*` and `~/foo/mo/` returns `~/foo`
  */
 function getMultiPathLCA(searchPaths: string[]): string {
-  if (searchPaths.length < 2) {
-    throw new Error('At least two search paths must be provided')
-  }
+  // if (searchPaths.length < 2) {
+  //   throw new Error('At least two search paths must be provided')
+  // }
 
   const commonPaths = new Array<string>()
   const splitPaths = new Array<string[]>()
@@ -78,16 +78,11 @@ function getMultiPathLCA(searchPaths: string[]): string {
   return path.join(...commonPaths)
 }
 
-export async function findFilesToUpload(
-  searchPath: string,
-  globOptions?: glob.GlobOptions
-): Promise<SearchResult> {
+export async function findFilesToUpload( searchPath: string, globOptions?: glob.GlobOptions): Promise<SearchResult>
+{
   const searchResults: string[] = []
-  const globber = await glob.create(
-    searchPath,
-    globOptions || getDefaultGlobOptions()
-  )
-  const rawSearchResults: string[] = await globber.glob()
+  const globCreationResult = await glob.create(searchPath,globOptions || getDefaultGlobOptions())
+  const rawSearchResults: string[] = await globCreationResult.glob()
 
   /*
     Files are saved with case insensitivity. Uploading both a.txt and A.txt will files to be overwritten
@@ -122,7 +117,7 @@ export async function findFilesToUpload(
   }
 
   // Calculate the root directory for the artifact using the search paths that were utilized
-  const searchPaths: string[] = globber.getSearchPaths()
+  const searchPaths: string[] = globCreationResult.getSearchPaths()
 
   if (searchPaths.length > 1) {
     info(
