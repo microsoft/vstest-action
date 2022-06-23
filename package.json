@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "ncc build src\\index.ts",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && ncc build src\\index.ts",
     "test": "jest --coverage"
   },
   "dependencies": {
