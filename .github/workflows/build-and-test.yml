@@ -17,20 +17,18 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: windows-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    environment: Automation Test
+    runs-on: windows-latest # The type of runner that the job will run on
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      -name: Checkout from PR branch
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Installing node_modules
+        run:  npm install
+        
+      - name: Build GitHub Acton
+        run: npm run build
+        
+      - name: Run Unit and Functional Tests
+        run: npm run test
 
-      # Runs a set of commands using the runners shell
-      - run: |
-          npm install
-      - run: |
-          npm run build && npm run package
