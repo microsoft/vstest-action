@@ -20,8 +20,9 @@ jobs:
     environment: Automation Test
     runs-on: windows-latest # The type of runner that the job will run on
     steps:
-      -name: Checkout from PR branch
-      - uses: actions/checkout@v2
+    
+      - name: Checkout from PR branch
+        uses:  actions/checkout@v2
 
       - name: Installing node_modules
         run:  npm install
