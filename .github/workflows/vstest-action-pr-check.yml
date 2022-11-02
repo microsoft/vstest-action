@@ -6,6 +6,8 @@ on:
       - main
       - 'releases/*'
 
+  workflow_dispatch:
+
 jobs:
     deploy:
       environment: Automation test
