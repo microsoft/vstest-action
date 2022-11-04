@@ -1,0 +1,40 @@
+name: pr-check
+
+on: pull_request
+jobs:
+    deploy:
+      environment: Automation test
+      runs-on: windows-latest
+      steps:
+      - name: Checkout from PR branch  
+        uses: actions/checkout@v2
+        
+        #Using 12.x version as an example
+      - name: Set Node.js 12.x for GitHub Action
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          
+      # include any workflow/action specific dependencies to execute Functional Tests
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.102
+          
+      - name: Install dependencies
+        working-directory: './__tests__/Utilities/functional-tests/'
+        run: dotnet restore
+        
+      - name: Build
+        working-directory: './__tests__/Utilities/functional-tests/'
+        run: dotnet build --configuration Debug --no-restore
+        
+      - name: Test
+        working-directory: './__tests__/Utilities/functional-tests/'
+        run: dotnet test
+        
+      - name: 'VSTest Action using functional tests'
+        uses: ./                  #picks the current action PR code.
+        with:
+          testAssembly: 'vstest-functional-test.dll'
+          searchFolder: './__tests__/Utilities/functional-tests/bin/Debug/net6.0/'
