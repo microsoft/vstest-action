@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "SET NODE_OPTIONS=--openssl-legacy-provider && ncc build src\\index.ts",
-    "test": "jest --coverage"
+    "test": "jest vstest.tests.ts --coverage",
+    "functional-test": "jest vstest.spec.ts"
   },
   "dependencies": {
     "@actions/artifact": "^0.5.2",
