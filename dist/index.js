@@ -1083,6 +1083,53 @@ function onceStrict (fn) {
 
 /***/ }),
 
+/***/ 81:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getVsTestPath = void 0;
+const core = __importStar(__webpack_require__(470));
+const path = __importStar(__webpack_require__(622));
+function getVsTestPath() {
+    let vstestLocationMethod = core.getInput('vstestLocationMethod');
+    if (vstestLocationMethod && vstestLocationMethod.toUpperCase() === "LOCATION") {
+        return core.getInput('vstestLocation');
+    }
+    let vsTestVersion = core.getInput('vsTestVersion');
+    if (vsTestVersion && vsTestVersion === "14.0") {
+        return path.join(__dirname, 'win-x64/VsTest/v140/vstest.console.exe');
+    }
+    if (vsTestVersion && vsTestVersion === "15.0") {
+        return path.join(__dirname, 'win-x64/VsTest/v150/Common7/IDE/Extensions/TestPlatform/vstest.console.exe');
+    }
+    return path.join(__dirname, 'win-x64/VsTest/v160/Common7/IDE/Extensions/TestPlatform/vstest.console.exe');
+}
+exports.getVsTestPath = getVsTestPath;
+
+
+/***/ }),
+
 /***/ 82:
 /***/ (function(__unusedmodule, exports) {
 
@@ -2396,6 +2443,74 @@ exports.realpath = function realpath(p, cache, cb) {
 /***/ (function(module) {
 
 module.exports = require("child_process");
+
+/***/ }),
+
+/***/ 139:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getArguments = void 0;
+const core = __importStar(__webpack_require__(470));
+function getArguments() {
+    let args = '';
+    let testFiltercriteria = core.getInput('testFiltercriteria');
+    if (testFiltercriteria) {
+        args += `/TestCaseFilter:${testFiltercriteria} `;
+    }
+    let runSettingsFile = core.getInput('runSettingsFile');
+    if (runSettingsFile) {
+        args += `/Settings:${runSettingsFile} `;
+    }
+    let pathToCustomTestAdapters = core.getInput('pathToCustomTestAdapters');
+    if (pathToCustomTestAdapters) {
+        args += `/TestAdapterPath:${pathToCustomTestAdapters} `;
+    }
+    let runInParallel = core.getInput('runInParallel');
+    if (runInParallel && runInParallel.toUpperCase() === "TRUE") {
+        args += `/Parallel `;
+    }
+    let runTestsInIsolation = core.getInput('runTestsInIsolation');
+    if (runTestsInIsolation && runTestsInIsolation.toUpperCase() === "TRUE") {
+        args += `/InIsolation `;
+    }
+    let codeCoverageEnabled = core.getInput('codeCoverageEnabled');
+    if (codeCoverageEnabled && codeCoverageEnabled.toUpperCase() === "TRUE") {
+        args += `/EnableCodeCoverage `;
+    }
+    let platform = core.getInput('platform');
+    if (platform && (platform === "x86" || platform === "x64" || platform === "ARM")) {
+        args += `/Platform:${platform} `;
+    }
+    let otherConsoleOptions = core.getInput('otherConsoleOptions');
+    if (otherConsoleOptions) {
+        args += `${otherConsoleOptions} `;
+    }
+    return args;
+}
+exports.getArguments = getArguments;
+
 
 /***/ }),
 
@@ -4723,129 +4838,14 @@ exports.run = void 0;
 const core = __importStar(__webpack_require__(470));
 const exec = __importStar(__webpack_require__(986));
 const path = __importStar(__webpack_require__(622));
-const artifact_1 = __webpack_require__(214);
-const search_1 = __webpack_require__(575);
-const input_helper_1 = __webpack_require__(583);
-const constants_1 = __webpack_require__(694);
-function uploadArtifact() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const inputs = input_helper_1.getInputs();
-            const searchResult = yield search_1.findFilesToUpload(inputs.searchPath);
-            if (searchResult.filesToUpload.length === 0) {
-                // No files were found, different use cases warrant different types of behavior if nothing is found
-                switch (inputs.ifNoFilesFound) {
-                    case constants_1.NoFileOptions.warn: {
-                        core.warning(`No files were found with the provided path: ${inputs.searchPath}. No artifacts will be uploaded.`);
-                        break;
-                    }
-                    case constants_1.NoFileOptions.error: {
-                        core.setFailed(`No files were found with the provided path: ${inputs.searchPath}. No artifacts will be uploaded.`);
-                        break;
-                    }
-                    case constants_1.NoFileOptions.ignore: {
-                        core.info(`No files were found with the provided path: ${inputs.searchPath}. No artifacts will be uploaded.`);
-                        break;
-                    }
-                }
-            }
-            else {
-                const s = searchResult.filesToUpload.length === 1 ? '' : 's';
-                core.info(`With the provided path, there will be ${searchResult.filesToUpload.length} file${s} uploaded`);
-                core.debug(`Root artifact directory is ${searchResult.rootDirectory}`);
-                if (searchResult.filesToUpload.length > 10000) {
-                    core.warning(`There are over 10,000 files in this artifact, consider create an archive before upload to improve the upload performance.`);
-                }
-                const artifactClient = artifact_1.create();
-                const options = {
-                    continueOnError: false
-                };
-                if (inputs.retentionDays) {
-                    options.retentionDays = inputs.retentionDays;
-                }
-                const uploadResponse = yield artifactClient.uploadArtifact(inputs.artifactName, searchResult.filesToUpload, searchResult.rootDirectory, options);
-                if (uploadResponse.failedItems.length > 0) {
-                    core.setFailed(`An error was encountered when uploading ${uploadResponse.artifactName}. There were ${uploadResponse.failedItems.length} items that failed to upload.`);
-                }
-                else {
-                    core.info(`Artifact ${uploadResponse.artifactName} has been successfully uploaded!`);
-                }
-            }
-        }
-        catch (err) {
-            core.setFailed(err.message);
-        }
-    });
-}
-function getTestAssemblies() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            let searchFolder = core.getInput('searchFolder');
-            let testAssembly = core.getInput('testAssembly');
-            core.debug(`Pattern to search test assemblies: ${searchFolder + testAssembly}`);
-            const searchResult = yield search_1.findFilesToUpload(searchFolder + testAssembly);
-            return searchResult.filesToUpload;
-        }
-        catch (err) {
-            core.setFailed(err.message);
-        }
-        return [];
-    });
-}
-function getArguments() {
-    let args = '';
-    let testFiltercriteria = core.getInput('testFiltercriteria');
-    if (testFiltercriteria) {
-        args += `/TestCaseFilter:${testFiltercriteria} `;
-    }
-    let runSettingsFile = core.getInput('runSettingsFile');
-    if (runSettingsFile) {
-        args += `/Settings:${runSettingsFile} `;
-    }
-    let pathToCustomTestAdapters = core.getInput('pathToCustomTestAdapters');
-    if (pathToCustomTestAdapters) {
-        args += `/TestAdapterPath:${pathToCustomTestAdapters} `;
-    }
-    let runInParallel = core.getInput('runInParallel');
-    if (runInParallel && runInParallel.toUpperCase() === "TRUE") {
-        args += `/Parallel `;
-    }
-    let runTestsInIsolation = core.getInput('runTestsInIsolation');
-    if (runTestsInIsolation && runTestsInIsolation.toUpperCase() === "TRUE") {
-        args += `/InIsolation `;
-    }
-    let codeCoverageEnabled = core.getInput('codeCoverageEnabled');
-    if (codeCoverageEnabled && codeCoverageEnabled.toUpperCase() === "TRUE") {
-        args += `/EnableCodeCoverage `;
-    }
-    let platform = core.getInput('platform');
-    if (platform && (platform === "x86" || platform === "x64" || platform === "ARM")) {
-        args += `/Platform:${platform} `;
-    }
-    let otherConsoleOptions = core.getInput('otherConsoleOptions');
-    if (otherConsoleOptions) {
-        args += `${otherConsoleOptions} `;
-    }
-    return args;
-}
-function getVsTestPath() {
-    let vstestLocationMethod = core.getInput('vstestLocationMethod');
-    if (vstestLocationMethod && vstestLocationMethod.toUpperCase() === "LOCATION") {
-        return core.getInput('vstestLocation');
-    }
-    let vsTestVersion = core.getInput('vsTestVersion');
-    if (vsTestVersion && vsTestVersion === "14.0") {
-        return path.join(__dirname, 'win-x64/VsTest/v140/vstest.console.exe');
-    }
-    if (vsTestVersion && vsTestVersion === "15.0") {
-        return path.join(__dirname, 'win-x64/VsTest/v150/Common7/IDE/Extensions/TestPlatform/vstest.console.exe');
-    }
-    return path.join(__dirname, 'win-x64/VsTest/v160/Common7/IDE/Extensions/TestPlatform/vstest.console.exe');
-}
+const uploadArtifact_1 = __webpack_require__(563);
+const getTestAssemblies_1 = __webpack_require__(394);
+const getArguments_1 = __webpack_require__(139);
+const getVsTestPath_1 = __webpack_require__(81);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let testFiles = yield getTestAssemblies();
+            let testFiles = yield getTestAssemblies_1.getTestAssemblies();
             if (testFiles.length == 0) {
                 throw new Error('No matched test files!');
             }
@@ -4859,9 +4859,9 @@ function run() {
             core.info(`Unzipping test tools...`);
             core.debug(`workerZipPath is ${workerZipPath}`);
             yield exec.exec(`powershell Expand-Archive -Path ${workerZipPath} -DestinationPath ${__dirname}`);
-            let vsTestPath = getVsTestPath();
+            let vsTestPath = getVsTestPath_1.getVsTestPath();
             core.debug(`VsTestPath: ${vsTestPath}`);
-            let args = getArguments();
+            let args = getArguments_1.getArguments();
             core.debug(`Arguments: ${args}`);
             core.info(`Running tests...`);
             yield exec.exec(`${vsTestPath} ${testFiles.join(' ')} ${args} /Logger:TRX`);
@@ -4871,7 +4871,7 @@ function run() {
         }
         // Always attempt to upload test result artifact
         try {
-            yield uploadArtifact();
+            yield uploadArtifact_1.uploadArtifact();
         }
         catch (err) {
             core.setFailed(err.message);
@@ -5175,6 +5175,63 @@ class Path {
 }
 exports.Path = Path;
 //# sourceMappingURL=internal-path.js.map
+
+/***/ }),
+
+/***/ 394:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getTestAssemblies = void 0;
+const core = __importStar(__webpack_require__(470));
+const search_1 = __webpack_require__(575);
+function getTestAssemblies() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let searchFolder = core.getInput('searchFolder');
+            let testAssembly = core.getInput('testAssembly');
+            core.debug(`Pattern to search test assemblies: ${searchFolder + testAssembly}`);
+            const searchResult = yield search_1.findFilesToUpload(searchFolder + testAssembly);
+            return searchResult.filesToUpload;
+        }
+        catch (err) {
+            core.setFailed(err.message);
+        }
+        return [];
+    });
+}
+exports.getTestAssemblies = getTestAssemblies;
+
 
 /***/ }),
 
@@ -7133,6 +7190,101 @@ exports.HttpClient = HttpClient;
 
 /***/ }),
 
+/***/ 563:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.uploadArtifact = void 0;
+const core = __importStar(__webpack_require__(470));
+const artifact_1 = __webpack_require__(214);
+const search_1 = __webpack_require__(575);
+const input_helper_1 = __webpack_require__(583);
+const constants_1 = __webpack_require__(694);
+function uploadArtifact() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const inputs = input_helper_1.getInputs();
+            const searchResult = yield search_1.findFilesToUpload(inputs.searchPath);
+            if (searchResult.filesToUpload.length === 0) {
+                // No files were found, different use cases warrant different types of behavior if nothing is found
+                switch (inputs.ifNoFilesFound) {
+                    case constants_1.NoFileOptions.warn: {
+                        core.warning(`No files were found with the provided path: ${inputs.searchPath}. No artifacts will be uploaded.`);
+                        break;
+                    }
+                    case constants_1.NoFileOptions.error: {
+                        core.setFailed(`No files were found with the provided path: ${inputs.searchPath}. No artifacts will be uploaded.`);
+                        break;
+                    }
+                    case constants_1.NoFileOptions.ignore: {
+                        core.info(`No files were found with the provided path: ${inputs.searchPath}. No artifacts will be uploaded.`);
+                        break;
+                    }
+                }
+            }
+            else {
+                const s = searchResult.filesToUpload.length === 1 ? '' : 's';
+                core.info(`With the provided path, there will be ${searchResult.filesToUpload.length} file${s} uploaded`);
+                core.debug(`Root artifact directory is ${searchResult.rootDirectory}`);
+                if (searchResult.filesToUpload.length > 10000) {
+                    core.warning(`There are over 10,000 files in this artifact, consider create an archive before upload to improve the upload performance.`);
+                }
+                const artifactClient = artifact_1.create();
+                const options = {
+                    continueOnError: false
+                };
+                if (inputs.retentionDays) {
+                    options.retentionDays = inputs.retentionDays;
+                }
+                const uploadResponse = yield artifactClient.uploadArtifact(inputs.artifactName, searchResult.filesToUpload, searchResult.rootDirectory, options);
+                if (uploadResponse.failedItems.length > 0) {
+                    core.setFailed(`An error was encountered when uploading ${uploadResponse.artifactName}. There were ${uploadResponse.failedItems.length} items that failed to upload.`);
+                }
+                else {
+                    core.info(`Artifact ${uploadResponse.artifactName} has been successfully uploaded!`);
+                }
+            }
+        }
+        catch (err) {
+            core.setFailed(err.message);
+        }
+    });
+}
+exports.uploadArtifact = uploadArtifact;
+
+
+/***/ }),
+
 /***/ 569:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -7571,9 +7723,9 @@ function getDefaultGlobOptions() {
  * Example 2: The patterns `~/foo/bar/*` and `~/foo/voo/two/*` and `~/foo/mo/` returns `~/foo`
  */
 function getMultiPathLCA(searchPaths) {
-    if (searchPaths.length < 2) {
-        throw new Error('At least two search paths must be provided');
-    }
+    // if (searchPaths.length < 2) {
+    //   throw new Error('At least two search paths must be provided')
+    // }
     const commonPaths = new Array();
     const splitPaths = new Array();
     let smallestPathLength = Number.MAX_SAFE_INTEGER;
@@ -7615,8 +7767,8 @@ function getMultiPathLCA(searchPaths) {
 function findFilesToUpload(searchPath, globOptions) {
     return __awaiter(this, void 0, void 0, function* () {
         const searchResults = [];
-        const globber = yield glob.create(searchPath, globOptions || getDefaultGlobOptions());
-        const rawSearchResults = yield globber.glob();
+        const globCreationResult = yield glob.create(searchPath, globOptions || getDefaultGlobOptions());
+        const rawSearchResults = yield globCreationResult.glob();
         /*
           Files are saved with case insensitivity. Uploading both a.txt and A.txt will files to be overwritten
           Detect any files that could be overwritten for user awareness
@@ -7645,7 +7797,7 @@ function findFilesToUpload(searchPath, globOptions) {
             }
         }
         // Calculate the root directory for the artifact using the search paths that were utilized
-        const searchPaths = globber.getSearchPaths();
+        const searchPaths = globCreationResult.getSearchPaths();
         if (searchPaths.length > 1) {
             core_1.info(`Multiple search paths detected. Calculating the least common ancestor of all paths`);
             const lcaSearchPath = getMultiPathLCA(searchPaths);
