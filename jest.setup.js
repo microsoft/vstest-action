@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const io = require('@actions/io')
-const data = require('./jest.setup.json')
+const data = require('./jest.setup.template.json')
 
 jest.setTimeout(60000) // in milliseconds
 

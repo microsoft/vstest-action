@@ -89,8 +89,9 @@ describe('vstest Action Unit Tests', ()=>{
       // Act
       let result = await Search.findFilesToUpload(searchFolder)
 
-      // Assert        
-      expect(result.filesToUpload).toEqual(expectFiles)
+      // Assert
+      expect(result.filesToUpload.length).toEqual(expectFiles.length)
+      expect(result.filesToUpload[0].split("\\").slice(-1)).toEqual(expectFiles[0].split("\\").slice(-1))
       mock.restore()
   })
 
@@ -153,7 +154,8 @@ describe('vstest Action Unit Tests', ()=>{
       let result = await Search.findFilesToUpload(searchFolder)
 
       // Assert        
-      expect(result.filesToUpload).toEqual(expectFiles)
+      expect(result.filesToUpload.length).toEqual(expectFiles.length)
+      expect(result.filesToUpload[0].split("\\").slice(-1)).toEqual(expectFiles[0].split("\\").slice(-1))
       mock.restore()
   })
   
@@ -250,7 +252,8 @@ describe('vstest Action Unit Tests', ()=>{
       let result = await Search.findFilesToUpload(searchFolder, globOptions)
 
       // Assert        
-      expect(result.filesToUpload).toEqual(expectFiles)
+      expect(result.filesToUpload.length).toEqual(expectFiles.length)
+      expect(result.filesToUpload[0].split("\\").slice(-1)).toEqual(expectFiles[0].split("\\").slice(-1))
       mock.restore()
   })
 
