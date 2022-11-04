@@ -97,36 +97,36 @@ describe('vstest Action Unit Tests', ()=>{
     
     });
 
-    // it("test getTestAssemblies with valid searchResults", async () => {
+    it("test getTestAssemblies with valid searchResults", async () => {
 
-    //     // Arrange
-    //     const coreGetInputMock = jest.spyOn(core, 'getInput');
+        // Arrange
+        const coreGetInputMock = jest.spyOn(core, 'getInput');
 
-    //     when(coreGetInputMock).calledWith('searchFolder').mockReturnValue('folderPath\\')
-    //     .calledWith('testAssembly').mockReturnValue('testFile.sln');
+        when(coreGetInputMock).calledWith('searchFolder').mockReturnValue('folderPath\\')
+        .calledWith('testAssembly').mockReturnValue('testFile.sln');
 
-    //     const returnValue1 = core.getInput('searchFolder');
-    //     const returnValue2 = core.getInput('testAssembly');
+        const returnValue1 = core.getInput('searchFolder');
+        const returnValue2 = core.getInput('testAssembly');
 
-    //     var filesToUploadValue = ["testFile.zip"];
-    //     var rootDirectoryValue = "C:\\Users\\Public\\";
+        var filesToUploadValue = ["testFile.zip"];
+        var rootDirectoryValue = "C:\\Users\\Public\\";
 
-    //     const searchResults = {
-    //         filesToUpload: filesToUploadValue,
-    //         rootDirectory: rootDirectoryValue
-    //     };
+        const searchResults = {
+            filesToUpload: filesToUploadValue,
+            rootDirectory: rootDirectoryValue
+        };
 
-    //     jest.mock('../src/search');
-    //     const findFilesToUploadMock = jest.spyOn(Search, 'findFilesToUpload');
-    //     when(findFilesToUploadMock).mockResolvedValue(searchResults);
+        jest.mock('../src/search');
+        const findFilesToUploadMock = jest.spyOn(Search, 'findFilesToUpload');
+        when(findFilesToUploadMock).mockResolvedValue(searchResults);
 
-    //     // Act
-    //     var testAssembly = await getTestAssemblies();
+        // Act
+        var testAssembly = await getTestAssemblies();
 
-    //     // Assert
-    //     expect(testAssembly).not.toBeNull()
-    //     findFilesToUploadMock.mockReset()
-    // });
+        // Assert
+        expect(testAssembly).not.toBeNull()
+        findFilesToUploadMock.mockReset()
+    });
 
     it("test getTestAssemblies with empty searchResults", async () => {
 
@@ -390,36 +390,36 @@ describe('vstest Action Unit Tests', ()=>{
     
     });
 
-    // it("test uploadArtifact with valid searchResults", async () => {
+    it("test uploadArtifact with valid searchResults", async () => {
 
-    //     // Arrange
-    //     const coreGetInputMock = jest.spyOn(core, 'getInput');
+        // Arrange
+        const coreGetInputMock = jest.spyOn(core, 'getInput');
 
-    //     when(coreGetInputMock).calledWith('searchFolder').mockReturnValue('folderPath\\')
-    //     .calledWith('testAssembly').mockReturnValue('testFile.sln');
+        when(coreGetInputMock).calledWith('searchFolder').mockReturnValue('folderPath\\')
+        .calledWith('testAssembly').mockReturnValue('testFile.sln');
 
-    //     const returnValue1 = core.getInput('searchFolder');
-    //     const returnValue2 = core.getInput('testAssembly');
+        const returnValue1 = core.getInput('searchFolder');
+        const returnValue2 = core.getInput('testAssembly');
 
-    //     var filesToUploadValue = ["testFile.zip"];
-    //     var rootDirectoryValue = "C:\\Users\\Public\\";
+        var filesToUploadValue = ["testFile.zip"];
+        var rootDirectoryValue = "C:\\Users\\Public\\";
 
-    //     const searchResults = {
-    //         filesToUpload: filesToUploadValue,
-    //         rootDirectory: rootDirectoryValue
-    //     };
+        const searchResults = {
+            filesToUpload: filesToUploadValue,
+            rootDirectory: rootDirectoryValue
+        };
 
-    //     jest.mock('../src/search');
-    //     const findFilesToUploadMock = jest.spyOn(Search, 'findFilesToUpload');
-    //     when(findFilesToUploadMock).mockResolvedValue(searchResults);
+        jest.mock('../src/search');
+        const findFilesToUploadMock = jest.spyOn(Search, 'findFilesToUpload');
+        when(findFilesToUploadMock).mockResolvedValue(searchResults);
 
-    //     // Act
-    //     var testAssembly = await uploadArtifact();
+        // Act
+        var testAssembly = await uploadArtifact();
 
-    //     // Assert
-    //     expect(testAssembly).not.toBeNull()
-    //     findFilesToUploadMock.mockReset()
-    // });
+        // Assert
+        expect(testAssembly).not.toBeNull()
+        findFilesToUploadMock.mockReset()
+    });
 
 
     // test('test findFilesToUpload with empty searchFolder', async () => {

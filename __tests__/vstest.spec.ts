@@ -300,7 +300,7 @@ describe('vstest Action Unit Tests', ()=>{
     const coreGetInputMock = jest.spyOn(core, 'getInput');
     when(coreGetInputMock)
     .calledWith(Inputs.Name).mockReturnValue('vstest-functional-test.csproj')
-    .calledWith(Inputs.IfNoFilesFound).mockReturnValue(a)
+    .calledWith(Inputs.IfNoFilesFound).mockReturnValue('warn')
     .calledWith(Inputs.RetentionDays).mockReturnValue('30');
 
     jest.spyOn(core, 'warning')
@@ -324,6 +324,6 @@ describe('vstest Action Unit Tests', ()=>{
 
     // Assert
     expect(expected).toBeCalled
-  }) 
+  });
 
 })
