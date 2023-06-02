@@ -1,32 +1,30 @@
-# VSTest GitHub Action
+# microsoft/vstest-action
 
-This action was created to run tests using VSTest framework and to easily migrate a pipeline using [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops). Most of the commonly used properties in the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops) map to properties of this GitHub action. Like the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops), this action only supports `Windows` but NOT `Linux`.
+This action will help run tests using VSTest framework and easily migrate a pipeline using [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops). Most of the commonly used properties in the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops) map to properties of this GitHub action. Like the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops), this action only supports `Windows` but NOT `Linux`.
 
 Due to the unavailability of a Test results UI, test results are displayed in the console logs of the action.
 
-## Usage
-
-See [action.yml](action.yml)
+For more information about the action arguments, see [action.yml](action.yml).
 
 ## Example
 
+## Example Usage
+
 ```yaml
-jobs:
-  my_action_job:
-    runs-on: windows-latest
-    name: A job to run VSTest
-    steps:
-      - name: Download tests binary zip
-        run: powershell Invoke-WebRequest -Uri "https://localworker.blob.core.windows.net/win-x64/tests.zip" -OutFile "./tests.zip"
-      - name: Unzip tests binary
-        run: powershell Expand-Archive -Path tests.zip -DestinationPath ./
-      - name: Run tests
-        uses: microsoft-approved-actions/vstest@master
-        with:
-          testAssembly: CloudTest.DefaultSamples*.dll
-          searchFolder: ./tests/
-          runInParallel: true
+- name: Build test project
+  run: dotnet build test/InteractionTests/InteractionTests.csproj
+
+- name: Run tests
+  uses: microsoft/vstest-action@v1.0.0
+  with:
+    testAssembly: **/*InteractionTests.dll
+    searchFolder: tests/
 ```
+
+## Optional Parameters
+
+There are a few additional parameters that can be set if you need them.
+These are optional and should only be set if you know that you need them or what you are doing.
 
 ## Contributing
 
@@ -39,7 +37,9 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 ## Trademarks
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow
+This project may contain trademarks or logos for projects, products, or services.
+Authorized use of Microsoft trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
+Any use of third-party trademarks or logos are subject to those third-party's policies.
