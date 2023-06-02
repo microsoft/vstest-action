@@ -1,14 +1,22 @@
 # microsoft/vstest-action
 
-This action will help run tests using VSTest framework and easily migrate a pipeline using [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops). Most of the commonly used properties in the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops) map to properties of this GitHub action. Like the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops), this action only supports `Windows` but NOT `Linux`.
+This GitHub Action will help run tests using VSTest framework and easily migrate a pipeline using [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops). Most of the commonly used properties in the [Azure DevOps VSTest task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops) map to properties of this GitHub action.
 
 Due to the unavailability of a Test results UI, test results are displayed in the console logs of the action.
 
-For more information about the action arguments, see [action.yml](action.yml).
+## Compatibilities
 
-## Example
+OS|Is supported
+---|:---:
+Windows|✅
+Linux|❌
+Mac|❌
 
-## Example Usage
+## Usage
+
+See [action.yml](action.yml)
+
+**Run dotnet tests:**
 
 ```yaml
 - name: Build test project
@@ -20,11 +28,6 @@ For more information about the action arguments, see [action.yml](action.yml).
     testAssembly: **/*InteractionTests.dll
     searchFolder: tests/
 ```
-
-## Optional Parameters
-
-There are a few additional parameters that can be set if you need them.
-These are optional and should only be set if you know that you need them or what you are doing.
 
 ## Contributing
 
