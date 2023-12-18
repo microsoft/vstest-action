@@ -4864,7 +4864,7 @@ function run() {
             let args = getArguments_1.getArguments();
             core.debug(`Arguments: ${args}`);
             core.info(`Running tests...`);
-            yield exec.exec(`${vsTestPath} ${testFiles.join(' ')} ${args} /Logger:TRX`);
+            yield exec.exec(`${vsTestPath} "${testFiles.join('" "')}" ${args} /Logger:TRX`);
         }
         catch (err) {
             core.setFailed(err.message);
