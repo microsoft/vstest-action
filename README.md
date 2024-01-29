@@ -21,7 +21,7 @@ jobs:
       - name: Unzip tests binary
         run: powershell Expand-Archive -Path tests.zip -DestinationPath ./
       - name: Run tests
-        uses: microsoft-approved-actions/vstest@master
+        uses: microsoft/vstest-action@v1.0.0
         with:
           testAssembly: CloudTest.DefaultSamples*.dll
           searchFolder: ./tests/
